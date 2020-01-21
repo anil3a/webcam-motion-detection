@@ -4,6 +4,7 @@ Webcam motion detection
 """
 import cv2
 import numpy as np
+import datetime
 
 THRESHOLD = 40
 camera = cv2.VideoCapture(0)
@@ -22,6 +23,7 @@ videoWriter = cv2.VideoWriter('videos/motion1.avi',
                               fps, size)
 counter = 0
 fileNameIncrement = 1
+printedMessage = 0
 
 while True:
     ret, frame = camera.read()
@@ -53,10 +55,11 @@ while True:
         # Lower the Detection counts, better lower the stop time
         loopEndCount += 1
         if loopEndCount > 300 and recordVideo == 1:
-            print("Video has stopped now.")
-            counter = 0
+            print(str(datetime.datetime.now()) + " - Recording has stopped.")
+            print("")
             recordVideo = 0
             loopEndCount = 0
+            printedMessage = 0
             fileNameIncrement += 1
             videoWriter = cv2.VideoWriter('videos/motion' + str(fileNameIncrement) + '.avi',
                                           cv2.VideoWriter_fourcc('D', 'I', 'V', 'X'),
@@ -69,10 +72,20 @@ while True:
         (x, y, w, h) = cv2.boundingRect(c)
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
+    counter += 1
+
     if recordVideo == 1:
-        counter += 1
-        print("Video recording......")
+        # print("Video recording......")
         videoWriter.write(frame)
+
+        if printedMessage == 0:
+            print(str(datetime.datetime.now()) + " - Recording Started..... ")
+            printedMessage = 1
+
+        if counter > 80:
+            counter = 0
+            print(str(datetime.datetime.now()) + " - Recording..... ")
+            printedMessage = 1
 
     cv2.imshow("contours", frame)
     # cv2.imshow("dif", diff)
