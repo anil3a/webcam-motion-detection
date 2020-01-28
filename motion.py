@@ -43,6 +43,29 @@ while True:
     # Calculate the outline of the target in the image
     cnts, hierarchy = cv2.findContours(diff.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
+    # image = cv2.imread(imagePath)
+    cascPath = "HaarCascade/haarcascade_frontalface_default.xml"
+
+    # Create the haar cascade
+    faceCascade = cv2.CascadeClassifier(cascPath)
+    # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    # Detect faces in the image
+    faces = faceCascade.detectMultiScale(
+        gray_frame,
+        scaleFactor=1.1,
+        minNeighbors=5,
+        minSize=(30, 30),
+        flags=cv2.CASCADE_SCALE_IMAGE
+    )
+
+    print("Found {0} faces!".format(len(faces)))
+    print("Found {0} motions!".format(len(cnts)))
+
+    # Draw a rectangle around the faces
+    for (x, y, w, h) in faces:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
     # Counts of Motion Detection
     # From my tests, 3 counts are usually motions to find there is anything
     # Lower than 3 are other small parts that are not human
@@ -88,8 +111,8 @@ while True:
             printedMessage = 1
 
     cv2.imshow("contours", frame)
-    # cv2.imshow("dif", diff)
-    # cv2.imwrite('didff.jpg', diff)
+    cv2.imshow("dif", diff)
+    cv2.imwrite('diff.jpg', diff)
     if cv2.waitKey(int(1000 / 12)) & 0xff == ord('q'):
         break
 cv2.destroyAllWindows()
