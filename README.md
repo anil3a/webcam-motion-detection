@@ -1,4 +1,4 @@
-# Webcam Motion Detection with Face detection
+# Webcam Motion Detection and Face detection
 Python Motion detection with separate video between intervals
 
 ### Descriptions
@@ -16,8 +16,14 @@ pip install requirements.txt
 ```
 
 ### Usage
+Motion Detection
 ```python
-python motion.py
+python motion_v2.py
+``` 
+
+Face Detection
+```python
+python face_detection.py
 ``` 
 
 ### TODOs
