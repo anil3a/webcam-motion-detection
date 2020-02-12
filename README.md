@@ -28,3 +28,9 @@ python motion.py
 ### References and Credits:
 - https://github.com/richard512/python-security-camera
 - https://realpython.com/face-recognition-with-python
+
+### Reference and Credits for new:
+- https://www.youtube.com/watch?v=5jKj6dRKaZc
+
+TODOs improvement
+- https://github.com/RobinDavid/Motion-detection-OpenCV/blob/master/MotionDetector.py
